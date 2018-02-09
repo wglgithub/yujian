@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans    
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd    
+    http://www.springframework.org/schema/tx    
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd 
+    http://www.springframework.org/schema/data/jpa
+	http://www.springframework.org/schema/data/jpa/spring-jpa.xsd  
+    http://www.springframework.org/schema/context   
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd 
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd  
+    http://www.springframework.org/schema/mvc   
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+    http://www.springframework.org/schema/task
+    http://www.springframework.org/schema/task/spring-task-4.0.xsd">
+    <mvc:annotation-driven />
+     <!-- 开启自动扫描与装配bean -->
+     <context:component-scan base-package="com.topmobile.entry"></context:component-scan>
+	<context:component-scan base-package="com.topmobile.service"></context:component-scan>
+	
+ 	<!-- 配置JPA repositories -->
+ 	<jpa:repositories base-package="com.topmobile.dao"></jpa:repositories>
+ 	
+     <!-- 配置entityManagerFactory -->
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    	<property name="jpaVendorAdapter">
+    		<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+    			<property name="database" value="MYSQL"></property>
+    			<property name="generateDdl" value="true" ></property>
+    			<property name="showSql" value="true"></property>
+    			<property name="databasePlatform" value="org.hibernate.dialect.MySQL5Dialect" />
+    		</bean>
+    	</property>
+    	<property name="persistenceUnitName" value="authen"></property>
+    </bean>
+    
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	 <property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	 <!-- 配置声明式事务管理（采用通知的方式） -->
+	<!-- 配置事务特性 ，配置add、delete和update开始的方法，事务传播特性为required -->
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="save*" propagation="REQUIRED" />
+            <tx:method name="insert*" propagation="REQUIRED" />
+            <tx:method name="add*" propagation="REQUIRED" />
+            <tx:method name="delete*" propagation="REQUIRED" />
+            <tx:method name="update*" propagation="REQUIRED" />
+            <tx:method name="login*" propagation="REQUIRED" />
+            <tx:method name="regist*" propagation="REQUIRED" />
+            <tx:method name="excute*" propagation="REQUIRED"/>
+            <tx:method name="*" read-only="true" />
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置那些类的方法进行事务管理 -->
+    <aop:config>
+        <aop:pointcut id="allManagerMethod" expression="execution (* com.topmobile.service.*Service.*(..))" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="allManagerMethod" />
+    </aop:config>
+  	<tx:annotation-driven transaction-manager="transactionManager"/>
+  	
+  	<bean class="com.topmobile.dao.natived.NativeBaseDao" lazy-init="false" init-method="init"  ></bean>
+ </beans>   

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util-4.0.xsd
+        http://www.springframework.org/schema/task 
+        http://www.springframework.org/schema/task/spring-task-4.0.xsd ">
+	<mvc:annotation-driven />
+	<mvc:resources location="/res/" mapping="/res/**" />
+	<mvc:resources location="/html/" mapping="/html/**" />
+	<context:component-scan base-package="com.topmobile.web"></context:component-scan>
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<!-- 用于将对象转换为 JSON -->
+	<bean id="stringConverter"
+		class="org.springframework.http.converter.StringHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/plain;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="jsonConverter"
+		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>text/html;charset=UTF-8</value>
+				<value>text/json;charset=UTF-8</value>
+				<value>application/json;charset=UTF-8</value>
+			</list>
+		</property>
+	</bean>
+	<bean
+		class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<list>
+				<ref bean="stringConverter" />
+				<ref bean="jsonConverter" />
+			</list>
+		</property>
+	</bean>
+
+	<bean
+		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="order" value="1"></property>
+		<property name="contentNegotiationManager">
+			<bean class="org.springframework.web.accept.ContentNegotiationManager">
+				<constructor-arg>
+					<bean
+						class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+						<constructor-arg>
+							<map>
+								<entry key="json" value="application/json" />
+								<!-- <entry key="xml" value="application/xml"/> -->
+							</map>
+						</constructor-arg>
+					</bean>
+				</constructor-arg>
+			</bean>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<bean
+					class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"></bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- 文件上传解析器 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the properties available; the maximum file size in bytes -->
+		<property name="maxUploadSize" value="10240000" />
+	</bean>
+
+	<mvc:interceptors>
+		 <!-- API管理员用户登录拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/api/admin/**" />
+			<mvc:exclude-mapping path="/api/admin/sign/login"/>
+			<bean class="com.topmobile.interceptors.ApiAdminInterceptor"></bean>
+		</mvc:interceptor>
+		 <!-- JSP管理员用户登录拦截器 -->
+		<mvc:interceptor>
+			<mvc:mapping path="/jsp/admin/**" />
+			<mvc:exclude-mapping path="/jsp/admin/login"/>
+			<bean class="com.topmobile.interceptors.JspAdminInterceptor"></bean>
+		</mvc:interceptor>
+		
+		<!-- 报单系统登录页面拦截器 -->
+    	<mvc:interceptor>
+    		<mvc:mapping path="/v/baodan/**"/>
+    		<mvc:exclude-mapping path="/v/baodan/sign"/>
+    		<bean class="com.topmobile.interceptors.BaodanViewInterceptor"></bean>
+    	</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 初始化springutil类 -->
+    <bean class="com.topmobile.util.SpringUtil"></bean>
+    
+    
+    <bean id="messagehandler" class="com.topmobile.msg.works.MessageHandler"></bean>
+    <bean id="messageConsumer" class="com.topmobile.msg.MessageConsumer" lazy-init="false"  init-method="startWork" >
+    	<property name="listener" ref="messagehandler" ></property>
+    </bean>
+    
+</beans>  

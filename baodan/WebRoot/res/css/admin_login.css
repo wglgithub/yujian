@@ -1,0 +1,3 @@
+.login_skin_container{background-color: white;background-image: url("../images/admin_login_bg.jpg");background-repeat: no-repeat;background-position: center 0;background-size: cover;-webkit-background-size: cover;-o-background-size: cover;zoom:1;z-index: -10;position: fixed;left: 0;top: 0;height: 100%;width: 100%;}
+.s-opacity-90{opacity:0.9}
+.login_panel{width: 300px;margin: 150px auto;}

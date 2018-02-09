@@ -1,0 +1,4 @@
+将jar包发布到本地仓库
+mvn install:install-file -Dfile=E:\workspace\peini\baodan\thirdjars\sms-yj-1.0.jar  -DgroupId=com.wgl -DartifactId=sms-yj -Dversion=1.0  -Dpackaging=jar
+mvn install:install-file -Dfile=E:\workspace\peini\baodan\thirdjars\wgl-cache.jar  -DgroupId=com.wgl -DartifactId=wgl-cache -Dversion=final  -Dpackaging=jar
+
