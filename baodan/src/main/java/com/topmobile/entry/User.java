@@ -8,7 +8,12 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.topmobile.util.Constants;
-
+/**
+ * 
+ * @描述 报单用户表
+ * @author wgl
+ * @date 2018年2月9日
+ */
 @Entity
 @Table(name="user")
 public class User extends BaseEntry {
