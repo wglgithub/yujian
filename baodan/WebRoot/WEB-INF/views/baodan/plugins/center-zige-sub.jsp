@@ -38,7 +38,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							valueField:'id',
 							textField:'sets',
 							groupField:'name',
-							prompt:'请选择'
+							prompt:'请选择',
+							onSelect:function(r){console.log(r)}
 						">
 	    			</td>
 	    		</tr>
@@ -112,11 +113,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </div>
 <script>
 $(function(){
-	//reloadModel("6c9c579fcc864b3d87376f040bdcd3e5");	
+	$("#ff").on('blur','input[]');	
 });
 
 function onMallSelect(row){
-	console.log('onMallSelect',row);
+	//console.log('onMallSelect',row);
 	if(row.id){
 		modelloadDataDefault();
 		reloadModel(row.id);
@@ -134,4 +135,5 @@ function modelloadDataDefault(){
 function reloadModel(mall){
 	$('#select-model').combobox('reload', 'baodan/comn/api/model/list?mall='+mall);
 }
+
 </script>
