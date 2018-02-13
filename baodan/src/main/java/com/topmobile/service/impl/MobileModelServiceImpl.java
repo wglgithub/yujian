@@ -2,6 +2,7 @@ package com.topmobile.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +14,7 @@ import com.topmobile.bean.RequestParamModel;
 import com.topmobile.dao.BaodanMallDao;
 import com.topmobile.dao.MallsMobileMappingDao;
 import com.topmobile.dao.MobileModelDao;
+import com.topmobile.dao.natived.BaodanModelDao;
 import com.topmobile.entry.BaoDanMall;
 import com.topmobile.entry.Malls;
 import com.topmobile.entry.MallsMobileMapping;
@@ -103,6 +105,10 @@ public class MobileModelServiceImpl implements MobileModelService {
 		//更新model 表
 		modelDao.updateMallsById(model,modelFeildModels);
 		return 1;
+	}
+	@Override
+	public List<Map<String, String>> getModelListByMall(String mall) {
+		return new BaodanModelDao().getSelectByMallId(mall);
 	}
 
 	

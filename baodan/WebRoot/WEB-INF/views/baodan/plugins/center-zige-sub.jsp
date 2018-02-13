@@ -8,35 +8,130 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	<form id="ff" method="post">
 	    	<table cellpadding="5">
+	    		<tr><td>抢 购 人:</td><td>${param.name }</td></tr>
 	    		<tr>
 	    			<td>抢购平台:</td>
 	    			<td>
-	    			<select class="easyui-combobox" name="language"><option value="">请选择</option><option value="jd">京东商城</option><option value="vmall">华为商城</option></select>
+	    			<select class="easyui-combobox"  data-options="
+	    				url:'baodan/comn/api/malls/get',
+	    				method:'get',
+	    				valueField:'id',
+						textField:'name',
+	    				editable:false,
+	    				onSelect:onMallSelect,
+	    				prompt:'请选择'
+	    				
+	    			" name="mall" style="width: 78px;"></select>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>购买渠道:</td>
+	    			<td>
+	    			<select class="easyui-combobox"  data-options="editable:false" name="way"><option value="0">官方</option><option value="1">第三方</option></select>
 	    			</td>
 	    		</tr>
 	    		<tr>
 	    			<td>手机型号:</td>
-	    			<td><input class="easyui-textbox" type="text" name="email" data-options="required:true,validType:'email'"></input></td>
-	    		</tr>
-	    		<tr>
-	    			<td>Subject:</td>
-	    			<td><input class="easyui-textbox" type="text" name="subject" data-options="required:true"></input></td>
-	    		</tr>
-	    		<tr>
-	    			<td>Message:</td>
-	    			<td><input class="easyui-textbox" name="message" data-options="multiline:true" style="height:60px"></input></td>
-	    		</tr>
-	    		<tr>
-	    			<td>Language:</td>
 	    			<td>
-	    				<select class="easyui-combobox" name="language"><option value="ar">Arabic</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh-cht">Chinese Traditional</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="en" selected="selected">English</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="de">German</option><option value="el">Greek</option><option value="ht">Haitian Creole</option><option value="he">Hebrew</option><option value="hi">Hindi</option><option value="mww">Hmong Daw</option><option value="hu">Hungarian</option><option value="id">Indonesian</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="ko">Korean</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="no">Norwegian</option><option value="fa">Persian</option><option value="pl">Polish</option><option value="pt">Portuguese</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="sv">Swedish</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option><option value="vi">Vietnamese</option></select>
+	    				<input id="select-model" class="easyui-combobox" name="model" style="width:200px;" data-options="
+	    					method:'get',
+							valueField:'id',
+							textField:'sets',
+							groupField:'name',
+							prompt:'请选择'
+						">
 	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>支付方式:</td>
+	    			<td>
+	    				<select class="easyui-combobox"  data-options="editable:false,
+	    				prompt:'请选择',
+	    				valueField: 'value',
+						textField: 'label',
+						data: [{
+							label: '群主付款',
+							value: '1'
+						},{
+							label: '货到付款',
+							value: '2'
+						},{
+							label: '货到付款',
+							value: '3'
+						}]" name="language" style="width: 78px;">
+	    				</select>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>上报数量:</td>
+	    			<td>
+	    				<input name="amount" class="easyui-numberspinner" value="1" data-options="increment:1,min:1,max:200,required:true" style="width:78px;"></input>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>实付金额:</td>
+	    			<td>
+	    				<input name="amount" class="easyui-numberspinner" value="0" data-options="increment:1,min:1,max:20000,required:true" style="width:78px;"></input>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>订单编号:</td>
+	    			<td><input class="easyui-textbox" name="orderId" data-options="required:true,prompt:'请填写订单号'" missingMessage="请填写订单号" ></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>收 获 人:</td>
+	    			<td><input class="easyui-textbox" name="orderUser" data-options="required:true,prompt:'请填写收获人'"  missingMessage="请填写收获人"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>收获电话:</td>
+	    			<td><input class="easyui-textbox" name="orderPhone" data-options="required:true,prompt:'请填写收获电话'" missingMessage="请填写收获电话" ></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>收获地址:</td>
+	    			<td><input class="easyui-textbox" name="orderAdress" data-options="multiline:true,prompt:'请填写收获地址'" missingMessage="请填写收获地址" style="height:48px"></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>抢购账号:</td>
+	    			<td><input class="easyui-textbox" name="orderAccount" data-options="prompt:'请填平台下单账号'" ></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>抢购密码:</td>
+	    			<td><input class="easyui-textbox" name="orderPwd" data-options="prompt:'请填平台下单账号的密码'" ></input></td>
+	    		</tr>
+	    		<tr>
+	    			<td>备&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;注:</td>
+	    			<td><input class="easyui-textbox" name="orderAdress" data-options="multiline:true" style="height:48px"></input></td>
 	    		</tr>
 	    	</table>
 	    </form>
-	    <div style="text-align:center;padding:5px">
-	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">Submit</a>
-	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a>
+	    <div style="text-align:left;padding:15px">
+	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitForm()">提 交</a>
+<!-- 	    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">Clear</a> -->
 	    </div>
 	
 </div>
+<script>
+$(function(){
+	//reloadModel("6c9c579fcc864b3d87376f040bdcd3e5");	
+});
+
+function onMallSelect(row){
+	console.log('onMallSelect',row);
+	if(row.id){
+		modelloadDataDefault();
+		reloadModel(row.id);
+	}else{
+		modelloadDataDefault();
+	}
+}
+function onMallDataLoad(param,success,error){
+	console.log('onMallDataLoad',param);
+}
+function modelloadDataDefault(){
+	$('#select-model').combobox('clear');
+	
+}
+function reloadModel(mall){
+	$('#select-model').combobox('reload', 'baodan/comn/api/model/list?mall='+mall);
+}
+</script>

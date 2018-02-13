@@ -1,6 +1,7 @@
 package com.topmobile.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 
@@ -32,4 +33,10 @@ public interface MobileModelService {
 	 * @return
 	 */
 	public int updateModel(List<String> malls,String model);
+	/**
+	 * 查询商城下的机型
+	 * @param mall
+	 * @return
+	 */
+	public List<Map<String, String>> getModelListByMall(String mall);
 }

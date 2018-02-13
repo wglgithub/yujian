@@ -34,6 +34,7 @@ SessionUser currentUser = SessionUserUtil.getUserAttr(session);
 	<div data-options="region:'center'">
 		<jsp:include page="plugins/center-zige-sub.jsp">
 			<jsp:param value="<%=currentUser.getRole() %>" name="role"/>
+			<jsp:param value="<%=currentUser.getName() %>" name="name"/>
 		</jsp:include>
 	</div>
 </body>
