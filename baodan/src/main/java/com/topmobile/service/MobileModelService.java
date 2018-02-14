@@ -39,4 +39,9 @@ public interface MobileModelService {
 	 * @return
 	 */
 	public List<Map<String, String>> getModelListByMall(String mall);
+	/**
+	 * 查询机型是否存在
+	 * @return
+	 */
+	public boolean existById(String id);
 }

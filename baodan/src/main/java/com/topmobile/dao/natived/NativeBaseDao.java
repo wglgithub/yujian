@@ -20,6 +20,11 @@ public class NativeBaseDao {
 			entityManagerFactory = SpringUtil.getEntityManager();
 		}
 	}
+	public void setEntityManager(EntityManager entityManager){
+		if(entityManagerFactory==null){
+			entityManagerFactory = SpringUtil.getEntityManager();
+		}
+	}
 	
 	protected EntityManager getEntityManager() {
 		

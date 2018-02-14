@@ -110,6 +110,10 @@ public class MobileModelServiceImpl implements MobileModelService {
 	public List<Map<String, String>> getModelListByMall(String mall) {
 		return new BaodanModelDao().getSelectByMallId(mall);
 	}
+	@Override
+	public boolean existById(String id) {
+		return modelDao.exists(id);
+	}
 
 	
 }

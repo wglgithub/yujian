@@ -69,5 +69,6 @@
     </aop:config>
   	<tx:annotation-driven transaction-manager="transactionManager"/>
   	
-  	<bean class="com.topmobile.dao.natived.NativeBaseDao" lazy-init="false" init-method="init"  ></bean>
+  	<bean class="com.topmobile.dao.natived.NativeBaseDao" lazy-init="false" init-method="init"  >
+  	</bean>
  </beans>   

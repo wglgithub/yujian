@@ -1,11 +1,12 @@
 package com.topmobile.entry;
 
-import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.topmobile.bean.RequestBaodan;
 
 /**
  * 报单表
@@ -36,6 +37,9 @@ public class BaoDan extends BaseEntry {
 	//下单支付金额
 	@Column(nullable=true)
 	private double orderPay ;
+	//付款方式 0=群主付款,1=货到付款,2=自己垫付
+	@Column(nullable=true)
+	private int payWay ;
 	//订单号
 	@Column(nullable=true)
 	private String orderNo ;
@@ -253,6 +257,32 @@ public class BaoDan extends BaseEntry {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	public void setPayWay(int payWay) {
+		this.payWay = payWay;
+	}
+	public int getPayWay() {
+		return payWay;
+	}
+
+	public static BaoDan fromRequestBaodan(String userId,RequestBaodan bean) {
+		BaoDan d = new BaoDan();
+		d.setSubmitUser(userId);
+		d.setMall(bean.getMall());
+		d.setMobileModel(bean.getModel());
+		d.setOfficalChannels(bean.getWay()==0 ? true:false );
+		d.setAmount(bean.getAmount());
+		d.setOrderPay(bean.getPay());
+		d.setPayWay(bean.getPayway());
+		d.setOrderNo(bean.getOrderId());
+		d.setAddressee(bean.getOrderUser());
+		d.setAddress(bean.getOrderAdress());
+		d.setPickPhone(bean.getOrderPhone());
+		d.setBuyAccount(bean.getOrderAccount());
+		d.setBuyAccountPwd(bean.getOrderPwd());
+		d.setRemark(bean.getRemark());
+		return d;
 	}
 	
 	
