@@ -121,10 +121,13 @@ $(function(){
 
 function submitForm(){
 	$('#ff').form('submit',{
+		dataType:'json',
 		onSubmit:function(){
 			return $(this).form('enableValidation').form('validate');
 		},
 		success:function(d){
+			//console.log(d);
+			d = eval('(' + d + ')');
 			if(d.status==200){
 				clearForm();
 				myalert("sucess","提交成功");
