@@ -15,7 +15,7 @@ request.setAttribute("role", role);
         <a href="<%=basePath %>v/baodan/sub"><span>上报资格</span></a>
     </li>
     <li id="资格查询"  class="nav-item">
-        <a href="<%=basePath %>v/baodan/worker/query"><span>资格查询</span></a>
+        <a href="<%=basePath %>v/baodan/query"><span>资格查询</span></a>
     </li>
     <li id="数据统计"  class="nav-item">
         <a href="<%=basePath %>v/baodan/worker/count"><span>数据统计</span></a>
