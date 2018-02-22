@@ -11,13 +11,14 @@ import javax.persistence.Table;
  * @date 2017年7月23日 上午10:01:50
  */
 @Table(name="admin_user")
+@org.hibernate.annotations.Table(appliesTo="admin_user",comment="行情系统管理员账号表")
 @Entity
 public class AdminUser extends BaseEntry{
 	private static final long serialVersionUID = -8781106402838092128L;
 
 	@Column(nullable=false)
 	private String account ;
-	@Column
+	@Column(columnDefinition="varchar(255) COMMENT '姓名 '")
 	private String name ;
 	@Column(nullable=false)
 	private String pwd ;

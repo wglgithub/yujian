@@ -15,6 +15,7 @@ import com.topmobile.bean.RequestBaodan;
  * @date 2017年11月24日 下午7:02:13
  */
 @Table(name="baodan")
+@org.hibernate.annotations.Table(appliesTo="baodan",comment="报单表")
 @Entity
 public class BaoDan extends BaseEntry {
 
