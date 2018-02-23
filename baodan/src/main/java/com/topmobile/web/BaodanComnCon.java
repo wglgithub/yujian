@@ -7,13 +7,17 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topmobile.bean.DataGridView;
 import com.topmobile.bean.RequestBaodan;
+import com.topmobile.entry.BaoDan;
+import com.topmobile.entry.BaoDanMall;
 import com.topmobile.service.BaodanMallService;
 import com.topmobile.service.BaodanService;
 import com.topmobile.service.MobileModelService;
@@ -76,5 +80,19 @@ public class BaodanComnCon extends BaodanBaseCon{
 		}
 		return JsonViewFactory.newErrorInstance("上报失败");
 		
+	}
+	@RequestMapping(value="zige/list",method=RequestMethod.GET)
+	@ResponseBody
+	public Object getBaodanList(int rows,int page,HttpSession session){
+		if(page==0){
+			page=1;
+		}
+		if(rows==0){
+			rows=10;
+		}
+		String userId = getCurrentUser(session).getId();
+		Page<BaoDan> lists = baodanService.getListByUserId(userId,page,rows);
+		
+		return DataGridView.fromSpringPage(lists);
 	}
 }

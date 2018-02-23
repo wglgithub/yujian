@@ -28,3 +28,6 @@ SessionUser user = SessionUserUtil.getUserAttr(session);
 	</div>
 
 </header>
+<style>
+.header{background: #3c8dbc;color: white;}
+</style>

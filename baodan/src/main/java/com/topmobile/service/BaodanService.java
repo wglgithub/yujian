@@ -1,6 +1,9 @@
 package com.topmobile.service;
 
+import org.springframework.data.domain.Page;
+
 import com.topmobile.bean.RequestBaodan;
+import com.topmobile.entry.BaoDan;
 
 public interface BaodanService {
 	/**
@@ -10,4 +13,6 @@ public interface BaodanService {
 	 * @return
 	 */
 	public int addBaodan(String userId,RequestBaodan bean);
+
+	public Page<BaoDan> getListByUserId(String userId, int page, int rows);
 }

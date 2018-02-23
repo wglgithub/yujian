@@ -54,16 +54,6 @@ public class BaodanMallServiceImpl implements BaodanMallService {
 	@Override
 	public Page<BaoDanMall> getPageList(int page, int size) {
 		PageRequest request = new PageRequest(page-1, size,new Sort(Sort.Direction.DESC, "ts"));
-		new Specification<BaoDanMall>() {
-
-			@Override
-			public Predicate toPredicate(Root<BaoDanMall> arg0,
-					CriteriaQuery<?> arg1, CriteriaBuilder arg2) {
-				// TODO Auto-generated method stub
-				return null;
-			}
-		};
-		
 		return mallDao.findAll(request);
 	}
 	@Override

@@ -1,6 +1,7 @@
 package com.topmobile.bean;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -82,6 +83,19 @@ public class DataGridView implements Serializable{
 	public static DataGridView fromSpringPage(Page pageObj) {
 		
 		return new DataGridView(pageObj);
+	}
+	@SuppressWarnings("rawtypes")
+	public static DataGridView fromSpringPage(Page pageObj,PageContentConvertor convertor) {
+		DataGridView view = new DataGridView(pageObj);
+		if(view.getRows()!=null&&convertor!=null){
+			List<Object> tempList = new ArrayList<Object>();
+			for (Object object : view.getRows()) {
+				tempList.add(convertor.Convertor(object));
+			}
+			view.setRows(tempList);
+			tempList = null;
+		}
+		return view ;
 	}
 	
 	
