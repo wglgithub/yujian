@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topmobile.bean.BaodanVo;
 import com.topmobile.bean.DataGridView;
 import com.topmobile.bean.RequestBaodan;
 import com.topmobile.entry.BaoDan;
@@ -91,7 +92,7 @@ public class BaodanComnCon extends BaodanBaseCon{
 			rows=10;
 		}
 		String userId = getCurrentUser(session).getId();
-		Page<BaoDan> lists = baodanService.getListByUserId(userId,page,rows);
+		Page<BaodanVo> lists = baodanService.getListByUserId(userId,page,rows);
 		
 		return DataGridView.fromSpringPage(lists);
 	}

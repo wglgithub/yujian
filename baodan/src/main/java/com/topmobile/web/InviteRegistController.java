@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.common.collect.Lists;
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.topmobile.bean.JsonViewObject;
 import com.topmobile.entry.User;
 import com.topmobile.service.BaoDanRegistService;
@@ -78,9 +79,16 @@ public class InviteRegistController {
 		/*
 		 * 验证手机号短信验证码 
 		 */
-		
+		if(registService.existsByMobile(mobile)){
+			return JsonViewFactory.newQueryFailInstance("手机号已被占用");
+		}
 		//注册账号
-		int res = registService.insertRegistByInviter(user,name,mobile,pwd);
+		try {
+			int res = registService.insertRegistByInviter(user,name,mobile,pwd);
+		}catch (Exception e) {
+			e.printStackTrace();
+			return JsonViewFactory.newQueryFailInstance("注册失败");
+		}
 		
 		return JsonViewFactory.newSuccessInstance();
 	}

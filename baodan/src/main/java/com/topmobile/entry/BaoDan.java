@@ -34,13 +34,13 @@ public class BaoDan extends BaseEntry {
 	private String mobileModel ; 
 	//数量
 	@Column(nullable=true)
-	private int amount ;
-	//下单支付金额
+	private Integer amount ;
+	//下单支付金额 单位分
 	@Column(nullable=true)
-	private double orderPay ;
+	private long orderPay ;
 	//付款方式 0=群主付款,1=货到付款,2=自己垫付
 	@Column(nullable=true)
-	private int payWay ;
+	private Integer payWay ;
 	//订单号
 	@Column(nullable=true)
 	private String orderNo ;
@@ -61,7 +61,7 @@ public class BaoDan extends BaseEntry {
 	private String address;
 	//是否官方渠道货
 	@Column(nullable=true)
-	private boolean officalChannels ; 
+	private Boolean officalChannels ; 
 	//物流单号
 	@Column
 	private String logisticsNo;
@@ -73,7 +73,7 @@ public class BaoDan extends BaseEntry {
 	private String sureState="未确认" ;
 	//管理员出手单价 单位分
 	@Column
-	private long offprice ;
+	private Long offprice ;
 	//代理收到的回款金额 单位分
 	@Column
 	private Long payment1 ;
@@ -88,184 +88,304 @@ public class BaoDan extends BaseEntry {
 	private Timestamp payTime2 ;
 	//代理收到汇款的状态  未回款、已回款
 	@Column
-	private String paymentState1;
+	private String paymentState1="未回款";
 	//抢手收到回款的状态  未回款、已回款
 	@Column
-	private String paymentState2;
+	private String paymentState2="未回款";
 	//管理员收益 单位分
 	@Column
-	private long income1 ;
+	private Long income1 ;
 	//代理收益 单位分
 	@Column
-	private long income2 ;
+	private Long income2 ;
 	//抢手收益 单位分
 	@Column
-	private long income3 ;
+	private Long income3 ;
 	//备注
 	@Column
 	private String remark ;
 	public BaoDan() {}
 	
+
 	public String getSubmitUser() {
 		return submitUser;
 	}
+
+
 	public void setSubmitUser(String submitUser) {
 		this.submitUser = submitUser;
 	}
+
+
 	public String getProxyId() {
 		return proxyId;
 	}
+
+
 	public void setProxyId(String proxyId) {
 		this.proxyId = proxyId;
 	}
+
+
 	public String getMall() {
 		return mall;
 	}
+
+
 	public void setMall(String mall) {
 		this.mall = mall;
 	}
+
+
 	public String getMobileModel() {
 		return mobileModel;
 	}
+
+
 	public void setMobileModel(String mobileModel) {
 		this.mobileModel = mobileModel;
 	}
-	public int getAmount() {
+
+
+	public Integer getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+
+
+	public void setAmount(Integer amount) {
 		this.amount = amount;
 	}
+
+
 	public double getOrderPay() {
 		return orderPay;
 	}
-	public void setOrderPay(double orderPay) {
+
+
+	public void setOrderPay(long orderPay) {
 		this.orderPay = orderPay;
 	}
+
+
+	public Integer getPayWay() {
+		return payWay;
+	}
+
+
+	public void setPayWay(Integer payWay) {
+		this.payWay = payWay;
+	}
+
+
 	public String getOrderNo() {
 		return orderNo;
 	}
+
+
 	public void setOrderNo(String orderNo) {
 		this.orderNo = orderNo;
 	}
+
+
 	public String getBuyAccount() {
 		return buyAccount;
 	}
+
+
 	public void setBuyAccount(String buyAccount) {
 		this.buyAccount = buyAccount;
 	}
+
+
 	public String getBuyAccountPwd() {
 		return buyAccountPwd;
 	}
+
+
 	public void setBuyAccountPwd(String buyAccountPwd) {
 		this.buyAccountPwd = buyAccountPwd;
 	}
+
+
 	public String getAddressee() {
 		return addressee;
 	}
+
+
 	public void setAddressee(String addressee) {
 		this.addressee = addressee;
 	}
+
+
 	public String getPickPhone() {
 		return pickPhone;
 	}
+
+
 	public void setPickPhone(String pickPhone) {
 		this.pickPhone = pickPhone;
 	}
+
+
 	public String getAddress() {
 		return address;
 	}
+
+
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public boolean isOfficalChannels() {
+
+
+	public Boolean getOfficalChannels() {
 		return officalChannels;
 	}
-	public void setOfficalChannels(boolean officalChannels) {
+
+
+	public void setOfficalChannels(Boolean officalChannels) {
 		this.officalChannels = officalChannels;
 	}
+
+
 	public String getLogisticsNo() {
 		return logisticsNo;
 	}
+
+
 	public void setLogisticsNo(String logisticsNo) {
 		this.logisticsNo = logisticsNo;
 	}
+
+
 	public String getFahuoState() {
 		return fahuoState;
 	}
+
+
 	public void setFahuoState(String fahuoState) {
 		this.fahuoState = fahuoState;
 	}
+
+
 	public String getSureState() {
 		return sureState;
 	}
+
+
 	public void setSureState(String sureState) {
 		this.sureState = sureState;
 	}
-	public double getOffprice() {
+
+
+	public Long getOffprice() {
 		return offprice;
 	}
-	
-	public long getPayment1() {
-		return payment1;
-	}
 
-	public void setPayment1(long payment1) {
-		this.payment1 = payment1;
-	}
 
-	public long getPayment2() {
-		return payment2;
-	}
-
-	public void setPayment2(long payment2) {
-		this.payment2 = payment2;
-	}
-
-	public void setOffprice(long offprice) {
+	public void setOffprice(Long offprice) {
 		this.offprice = offprice;
 	}
 
-	public void setIncome1(long income1) {
-		this.income1 = income1;
+
+	public Long getPayment1() {
+		return payment1;
 	}
 
-	public void setIncome2(long income2) {
-		this.income2 = income2;
+
+	public void setPayment1(Long payment1) {
+		this.payment1 = payment1;
 	}
 
-	public void setIncome3(long income3) {
-		this.income3 = income3;
+
+	public Timestamp getPayTime1() {
+		return payTime1;
 	}
+
+
+	public void setPayTime1(Timestamp payTime1) {
+		this.payTime1 = payTime1;
+	}
+
+
+	public Long getPayment2() {
+		return payment2;
+	}
+
+
+	public void setPayment2(Long payment2) {
+		this.payment2 = payment2;
+	}
+
+
+	public Timestamp getPayTime2() {
+		return payTime2;
+	}
+
+
+	public void setPayTime2(Timestamp payTime2) {
+		this.payTime2 = payTime2;
+	}
+
 
 	public String getPaymentState1() {
 		return paymentState1;
 	}
+
+
 	public void setPaymentState1(String paymentState1) {
 		this.paymentState1 = paymentState1;
 	}
+
+
 	public String getPaymentState2() {
 		return paymentState2;
 	}
+
+
 	public void setPaymentState2(String paymentState2) {
 		this.paymentState2 = paymentState2;
 	}
-	public double getIncome1() {
+
+
+	public Long getIncome1() {
 		return income1;
 	}
+
+
+	public void setIncome1(Long income1) {
+		this.income1 = income1;
+	}
+
+
+	public Long getIncome2() {
+		return income2;
+	}
+
+
+	public void setIncome2(Long income2) {
+		this.income2 = income2;
+	}
+
+
+	public Long getIncome3() {
+		return income3;
+	}
+
+
+	public void setIncome3(Long income3) {
+		this.income3 = income3;
+	}
+
+
 	public String getRemark() {
 		return remark;
 	}
+
+
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	
-	public void setPayWay(int payWay) {
-		this.payWay = payWay;
-	}
-	public int getPayWay() {
-		return payWay;
-	}
+
 
 	public static BaoDan fromRequestBaodan(String userId,RequestBaodan bean) {
 		BaoDan d = new BaoDan();
@@ -274,7 +394,7 @@ public class BaoDan extends BaseEntry {
 		d.setMobileModel(bean.getModel());
 		d.setOfficalChannels(bean.getWay()==0 ? true:false );
 		d.setAmount(bean.getAmount());
-		d.setOrderPay(bean.getPay());
+		d.setOrderPay((long) (bean.getPay()*100));
 		d.setPayWay(bean.getPayway());
 		d.setOrderNo(bean.getOrderId());
 		d.setAddressee(bean.getOrderUser());

@@ -6,6 +6,7 @@ package com.topmobile.util;
  * @date 2017年8月9日 上午10:30:38
  */
 public interface ApiResponseCode {
+	public int NO_SIGN = 403 ;
 	//参数格式错误
 	public int ERROR_ARGS_ILLEGAL = 400;
 	//操作出错或失败

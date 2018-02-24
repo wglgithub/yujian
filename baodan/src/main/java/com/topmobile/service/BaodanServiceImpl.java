@@ -1,26 +1,15 @@
 package com.topmobile.service;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import com.topmobile.bean.BaodanVo;
 import com.topmobile.bean.RequestBaodan;
 import com.topmobile.dao.BaodanDao;
-import com.topmobile.dao.BaodanSpecificationDao;
 import com.topmobile.dao.BaodanUserDao;
 import com.topmobile.entry.BaoDan;
-import com.topmobile.entry.User;
 
 @Service
 public class BaodanServiceImpl implements BaodanService {
@@ -31,7 +20,9 @@ public class BaodanServiceImpl implements BaodanService {
 	//private BaodanSpecificationDao baodanSpecificationDao;
 	@Autowired
 	private BaodanUserDao userDao ;
-
+	com.topmobile.dao.natived.BaodanDao getBaodanDao(){
+    	return new com.topmobile.dao.natived.BaodanDao();
+    }
 	@Override
 	public int addBaodan(String userId, RequestBaodan bean) {
 		BaoDan insertBean = null; //带插入数据
@@ -56,9 +47,9 @@ public class BaodanServiceImpl implements BaodanService {
 	}
 
 	@Override
-	public Page<BaoDan> getListByUserId(final String userId, int page, int size) {
-		PageRequest request = new PageRequest( page-1, size,new Sort(Sort.Direction.DESC, "ts") );
-		return baodanDao.findBySubmitUser(userId,request);
+	public Page<BaodanVo> getListByUserId(final String userId, int page, int size) {
+//		PageRequest request = new PageRequest( page-1, size,new Sort(Sort.Direction.DESC, "ts") );
+//		return baodanDao.findBySubmitUser(userId,request);
 //		return baodanSpecificationDao.findAll(new Specification<BaoDan>() {
 //			
 //			@Override
@@ -71,6 +62,7 @@ public class BaodanServiceImpl implements BaodanService {
 //				return null;
 //			}
 //		}, request);
+		return getBaodanDao().findMyList(page, size, userId);
 	}
 
 }

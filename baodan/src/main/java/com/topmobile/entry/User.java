@@ -27,7 +27,7 @@ public class User extends BaseEntry {
 	@Column
 	private String pwd ;
 	//绑定的手机号码
-	@Column(nullable=false)
+	@Column(nullable=false,unique=true)
 	private String mobile ;
 	//名称
 	@Column(nullable=false)

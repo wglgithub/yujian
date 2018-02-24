@@ -10,4 +10,6 @@ public interface BaodanUserDao extends BaseDao<User, String>{
 	User findByAccountAndPwd(String acc,String pwd);
 	@Query("select u.parent from User u where u.id=?1")
 	String getParentIdById(String userId);
+	@Query("select count(id) from User where mobile=?1")
+	int existsByMobile(String mobile);
 }

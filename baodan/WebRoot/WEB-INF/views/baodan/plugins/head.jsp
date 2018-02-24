@@ -19,8 +19,8 @@ SessionUser user = SessionUserUtil.getUserAttr(session);
 			<ul>
 				<li class="account-wrap">
 					<a><%=user.getName() %></a>
-					<ol class="account-panel" style="display: none;">
-						<li><a href="#" class="account-logout" target="_self">退出</a></li>
+					<ol class="account-panel" style="">
+						<li><a href="javascript:signOut();" class="account-logout" target="_self">退出</a></li>
 					</ol>
 				</li>
 			</ul>
@@ -31,3 +31,9 @@ SessionUser user = SessionUserUtil.getUserAttr(session);
 <style>
 .header{background: #3c8dbc;color: white;}
 </style>
+<script>
+function signOut(){
+	window.location.href="<%=basePath%>v/signout";
+}
+
+</script>

@@ -34,5 +34,10 @@ public class BaodanRegistServiceImpl implements BaoDanRegistService {
 		baodanUserDao.save(regUser);
 		return 1;
 	}
+	@Override
+	public boolean existsByMobile(String mobile) {
+		int result = baodanUserDao.existsByMobile(mobile);
+		return result>0 ? true:false;
+	}
 
 }

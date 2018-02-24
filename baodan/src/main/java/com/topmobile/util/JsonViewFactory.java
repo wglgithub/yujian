@@ -22,4 +22,7 @@ public class JsonViewFactory {
 	public static JsonViewObject newErrorNotExistInstance(String errorMsg){
 		return new JsonViewObject(ApiResponseCode.ERROR_NOT_EXIST,errorMsg);
 	}
+	public static JsonViewObject newNoSignInstance() {
+		return new JsonViewObject(ApiResponseCode.NO_SIGN, "请登录");
+	}
 }

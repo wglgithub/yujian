@@ -1,6 +1,7 @@
 package com.topmobile.web;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,6 +35,11 @@ public class JspPageController {
 	@RequestMapping("invite_success")
 	public String jspInviteSuccessRoute(HttpServletRequest request) {
 		return "invite_success";
+	}
+	@RequestMapping("signout")
+	public String jspSignOutRoute(HttpSession session) {
+		session.invalidate();
+		return "redirect:/v/baodan/sign";
 	}
 	@RequestMapping("baodan/index")
 	public String jspdaodanRoute(HttpServletRequest request) {

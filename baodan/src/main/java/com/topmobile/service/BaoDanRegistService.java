@@ -12,4 +12,6 @@ public interface BaoDanRegistService {
 	 */
 	int insertRegistByInviter(User user, String name, String mobile,String pwd);
 
+	boolean existsByMobile(String mobile);
+
 }
