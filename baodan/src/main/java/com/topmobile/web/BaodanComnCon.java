@@ -96,4 +96,13 @@ public class BaodanComnCon extends BaodanBaseCon{
 		
 		return DataGridView.fromSpringPage(lists);
 	}
+	
+	@RequestMapping(value="order/fahuo")
+	@ResponseBody
+	public Object fahuo(String id,String no,HttpSession session){
+		
+		int updateRows = baodanService.updateWuliuField(id,no);
+		
+		return JsonViewFactory.newSuccessInstance();
+	}
 }

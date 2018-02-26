@@ -15,4 +15,11 @@ public interface BaodanService {
 	public int addBaodan(String userId,RequestBaodan bean);
 
 	public Page<BaodanVo> getListByUserId(String userId, int page, int rows);
+	/**
+	 * 修改/添加物流单号
+	 * @param id
+	 * @param no
+	 * @return
+	 */
+	public int updateWuliuField(String id, String no);
 }

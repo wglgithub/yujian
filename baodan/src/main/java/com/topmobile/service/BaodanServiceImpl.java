@@ -10,6 +10,7 @@ import com.topmobile.bean.RequestBaodan;
 import com.topmobile.dao.BaodanDao;
 import com.topmobile.dao.BaodanUserDao;
 import com.topmobile.entry.BaoDan;
+import com.topmobile.util.Constants.WuliuState;
 
 @Service
 public class BaodanServiceImpl implements BaodanService {
@@ -63,6 +64,19 @@ public class BaodanServiceImpl implements BaodanService {
 //			}
 //		}, request);
 		return getBaodanDao().findMyList(page, size, userId);
+	}
+	@Override
+	public int updateWuliuField(String id, String no) {
+		BaoDan it = baodanDao.findOne(id);
+		if(it!=null){
+			it.setLogisticsNo(no);
+			if(it.getFahuoState()==null||WuliuState.WAIT.equals(it.getFahuoState())){
+				it.setFahuoState(WuliuState.SEND);
+			}
+			baodanDao.save(it);
+			return 1;
+		}
+		return 0;
 	}
 
 }
