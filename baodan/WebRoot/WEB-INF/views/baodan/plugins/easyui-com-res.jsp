@@ -9,3 +9,4 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <script type="text/javascript" src="res/jquery-easyui-1.5.3/jquery.min.js"></script>
 <script type="text/javascript" src="res/jquery-easyui-1.5.3/jquery.easyui.min.js"></script>
+<script type="text/javascript" src="res/jquery-easyui-1.5.3/locale/easyui-lang-zh_CN.js"></script>
