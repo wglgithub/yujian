@@ -6,7 +6,9 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 
 import com.topmobile.bean.RequestParamModel;
+import com.topmobile.bean.UserSelectModel;
 import com.topmobile.entry.MobileModel;
+import com.topmobile.entry.User;
 
 public interface MobileModelService {
 
@@ -44,4 +46,5 @@ public interface MobileModelService {
 	 * @return
 	 */
 	public boolean existById(String id);
+	public List<UserSelectModel> getUserNamesForSelect();
 }

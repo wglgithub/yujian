@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.topmobile.bean.RequestParamModel;
+import com.topmobile.bean.UserSelectModel;
 import com.topmobile.dao.BaodanMallDao;
 import com.topmobile.dao.MallsMobileMappingDao;
 import com.topmobile.dao.MobileModelDao;
@@ -19,6 +20,7 @@ import com.topmobile.entry.BaoDanMall;
 import com.topmobile.entry.Malls;
 import com.topmobile.entry.MallsMobileMapping;
 import com.topmobile.entry.MobileModel;
+import com.topmobile.entry.User;
 import com.topmobile.service.MobileModelService;
 import com.topmobile.util.Strings;
 @Service
@@ -108,11 +110,19 @@ public class MobileModelServiceImpl implements MobileModelService {
 	}
 	@Override
 	public List<Map<String, String>> getModelListByMall(String mall) {
+		if(Strings.isEmpty(mall)){
+			return new BaodanModelDao().getSelectAll();
+		}
 		return new BaodanModelDao().getSelectByMallId(mall);
 	}
 	@Override
 	public boolean existById(String id) {
 		return modelDao.exists(id);
+	}
+	@Override
+	public List<UserSelectModel> getUserNamesForSelect() {
+		
+		return modelDao.getUsersNameAndLetter();
 	}
 
 	
