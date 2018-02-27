@@ -18,7 +18,24 @@ public class BaodanModelDao extends NativeBaseDao {
 		.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
 		return query.getResultList();
 	}
+	public List<Map<String, String>> getSelectAll(){
+		String sql =getSelectAllSql();
+		Query query = createQuery(sql);
+		query.unwrap(SQLQuery.class)
+		.setResultTransformer(Transformers.ALIAS_TO_ENTITY_MAP);
+		return query.getResultList();
+	}
 
+	private String getSelectAllSql() {
+		return new StringBuilder()
+		.append("SELECT ")
+		.append(" m.c_id id, ")
+		.append(" m.name,  ")
+		.append(" CONCAT(m.name,' ',m.color,' ',m.ram,'+',m.rom) as sets ")
+		.append("from w_mobilemodel m   ")
+		.append(" ORDER BY m.`name` ASC , m.color, m.ram,m.rom  ")
+		.toString();
+	}
 	private String getSelectByMallIdSql() {
 		return new StringBuilder()
 		.append("SELECT ")

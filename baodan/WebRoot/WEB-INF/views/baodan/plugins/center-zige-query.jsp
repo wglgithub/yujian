@@ -8,12 +8,69 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div id="p" class="easyui-panel" title="资格查询" style="width:100%;height:100%;">
 	<div class="easyui-layout" fit="true">
 		<div id="tb"  region="north" border="false" style="padding:3px">
-			<span>Item ID:</span>
-			<input id="itemid" style="line-height:26px;border:1px solid #ccc">
-			<span>Product ID:</span>
-			<input id="productid" style="line-height:26px;border:1px solid #ccc">
-			<a href="javascript:;" class="easyui-linkbutton" plain="true" onclick="doSearch()">搜索</a>
-	
+			<form name="ff_search">
+			<div>
+			<span>开始日期:</span>
+			<input name="begin" class="easyui-datebox" data-options="editable:false" style="width: 100px"></input>
+			<span>结束日期:</span>
+			<input name="end" class="easyui-datebox" style="width: 100px"></input>
+			<span>处理日期:</span>
+			<input name="theday" class="easyui-datebox" data-options="editable:false" style="width: 100px"></input>
+			</div>
+			<div>
+			<span>上 报 人 :</span>
+			<input id="select-model" class="easyui-combobox" name="user" style="width:100px;" data-options="
+	    					method:'get',
+	    					url:'baodan/comn/api/user/select',
+							valueField:'name',
+							textField:'name',
+							groupField:'letter',
+							prompt:'请选择',
+							onSelect:function(r){console.log(r)}
+						"  >
+				<span>抢购平台:</span>
+				<select class="easyui-combobox"  data-options="
+	    				url:'baodan/comn/api/malls/get',
+	    				method:'get',
+	    				valueField:'id',
+						textField:'name',
+	    				editable:false,
+	    				onSelect:function(){},
+	    				prompt:'请选择'
+	    				
+	    			" name="mall" missingMessage="请选择抢购平台" style="width: 100px;"></select>
+	    		<span>处理方式:</span>	
+	    		<select class="easyui-combobox"  data-options="editable:false" name="dealway">
+	    			<option value="">全部</option>
+	    			<option value="未确认">未确认</option>
+	    			<option value="已支付">已支付</option>
+	    			<option value="已签收">已签收</option>
+	    			<option value="已回款">已回款</option>
+	    			<option value="已发货">已发货</option>
+	    		</select>
+	    		<span>付款方式:</span>	
+	    		<select class="easyui-combobox"  data-options="editable:false" name="payway">
+	    			<option value="">全部</option>
+	    			<option value="0">群主付款</option>
+	    			<option value="1">货到付款</option>
+	    			<option value="2">自己垫付</option>
+	    		</select>
+	    		<span>机 型 :</span>
+				<input id="select-model" class="easyui-combobox" name="model" style="width:180px;" data-options="
+	    					method:'get',
+	    					url:'baodan/comn/api/model/list',
+							valueField:'id',
+							textField:'sets',
+							groupField:'name',
+							prompt:'请选择',
+							onSelect:function(r){console.log(r)}
+						" />
+				<span>收 货 人 :</span><input name="recieve" class="easyui-textbox" style="width:100px;" >	
+				<span>订单编号:</span><input name="orderno" class="easyui-textbox" style="width:100px;" >
+				<a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'"onclick="doSearch()">搜索</a>
+			
+			</div>
+			</form>
 		</div>
 		<div region="center" border="false">
 		<table id="table-list">
@@ -97,10 +154,7 @@ function getSelected(){
 }
 
 function doSearch(){
-	$('#table-list').datagrid('load',{
-		itemid: $('#itemid').val(),
-		productid: $('#productid').val()
-	});
+	$('#table-list').datagrid('load',$('form[name=ff_search]').serializeObject());
 }
 //右键菜单点击
 function menuHandler(item){

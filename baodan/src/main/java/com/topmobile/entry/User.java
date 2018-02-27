@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import com.topmobile.util.Constants;
+import com.topmobile.util.Pinyin4jUtil;
 /**
  * 
  * @描述 报单用户表
@@ -32,6 +33,8 @@ public class User extends BaseEntry {
 	//名称
 	@Column(nullable=false)
 	private String name  ;
+	@Column(nullable=false,length=1)
+	private Character letter ;
 	//账号角色 抢手、代理、管理员
 	@Column(nullable=false)
 	private String role =Constants.Role.QIANG_SHOU ;
@@ -68,6 +71,11 @@ public class User extends BaseEntry {
 	
 	public User() {}
 	
+	public User(String name,Character letter){
+		this.name = name ;
+		this.letter = letter ;
+	}
+	
 	public String getAccount() {
 		return account;
 	}
@@ -91,6 +99,10 @@ public class User extends BaseEntry {
 	}
 	public void setName(String name) {
 		this.name = name;
+		if(this.name!=null&&!this.name.isEmpty()){
+			this.letter = Pinyin4jUtil.converterIndex(this.name);
+		}
+		
 	}
 	public String getRole() {
 		return role;
@@ -164,6 +176,13 @@ public class User extends BaseEntry {
 		data.put("role", getRole());
 		data.put("sex", getSex());
 		return data;
+	}
+	
+	public Character getLetter() {
+		return letter;
+	}
+	public void setLetter(Character letter) {
+		this.letter = letter;
 	}
 	
 }

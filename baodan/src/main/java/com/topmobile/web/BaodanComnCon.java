@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.topmobile.bean.BaodanVo;
 import com.topmobile.bean.DataGridView;
 import com.topmobile.bean.RequestBaodan;
+import com.topmobile.bean.UserSelectModel;
 import com.topmobile.entry.BaoDan;
 import com.topmobile.entry.BaoDanMall;
 import com.topmobile.service.BaodanMallService;
@@ -56,6 +57,17 @@ public class BaodanComnCon extends BaodanBaseCon{
 	@ResponseBody
 	public Object getModelsByMall(String mall){
 		List<Map<String,String>> list = modelService.getModelListByMall(mall);
+		return list ;
+	}
+	/**
+	 * 查询用户列表 名称和id
+	 * @使用场景 select选择视图数据
+	 * @return
+	 */
+	@RequestMapping(value="user/select",method=RequestMethod.GET)
+	@ResponseBody
+	public Object getUserNamesForSelect(){
+		List<UserSelectModel> list = modelService.getUserNamesForSelect();
 		return list ;
 	}
 	/**
