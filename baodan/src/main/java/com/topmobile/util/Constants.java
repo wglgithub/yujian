@@ -18,7 +18,12 @@ public class Constants {
 		String QIANG_SHOU="worker";
 		String SUPPER_ADMIN = "admin";
 	}
-	
+	public static interface CurrentState{
+		String NOT_SURE = "未确认";
+		String SEND = "已发货";
+		String SIGN = "已签收";
+		String HUIKUAN = "已回款";
+	}
 	public static interface WuliuState{
 		String WAIT = "未发货";
 		String SEND = "已发货";

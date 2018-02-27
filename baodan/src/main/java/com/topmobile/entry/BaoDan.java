@@ -71,6 +71,8 @@ public class BaoDan extends BaseEntry {
 	//确认状态
 	@Column
 	private String sureState="未确认" ;
+	@Column(columnDefinition="varchar(255) DEFAULT '未确认' COMMENT '当前处理状态' ")
+	private String currentState = "未确认";
 	//管理员出手单价 单位分
 	@Column
 	private Long offprice ;
@@ -384,6 +386,13 @@ public class BaoDan extends BaseEntry {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	
+	public void setCurrentState(String currentState) {
+		this.currentState = currentState;
+	}
+	public String getCurrentState() {
+		return currentState;
 	}
 
 

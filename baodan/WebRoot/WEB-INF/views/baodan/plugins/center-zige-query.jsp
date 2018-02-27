@@ -68,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<span>收 货 人 :</span><input name="recieve" class="easyui-textbox" style="width:100px;" >	
 				<span>订单编号:</span><input name="orderno" class="easyui-textbox" style="width:100px;" >
 				<a href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-search'"onclick="doSearch()">搜索</a>
-			
+				<a href="javascript:$('form[name=ff_search]').form('clear');" class="easyui-linkbutton">清空条件</a>
 			</div>
 			</form>
 		</div>

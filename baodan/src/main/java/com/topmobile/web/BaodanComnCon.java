@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topmobile.bean.BaodanSearchParam;
 import com.topmobile.bean.BaodanVo;
 import com.topmobile.bean.DataGridView;
 import com.topmobile.bean.RequestBaodan;
+import com.topmobile.bean.SessionUser;
 import com.topmobile.bean.UserSelectModel;
 import com.topmobile.entry.BaoDan;
 import com.topmobile.entry.BaoDanMall;
@@ -96,16 +98,17 @@ public class BaodanComnCon extends BaodanBaseCon{
 	}
 	@RequestMapping(value="zige/list",method=RequestMethod.GET)
 	@ResponseBody
-	public Object getBaodanList(int rows,int page,HttpSession session){
-		if(page==0){
-			page=1;
+	public Object getBaodanList( BaodanSearchParam p ,HttpSession session){
+		if(p.getPage()==null){
+			p.setPage(1);
 		}
-		if(rows==0){
-			rows=10;
+		if(p.getRows()==null){
+			p.setRows(10);
 		}
+		SessionUser user = getCurrentUser(session);
 		String userId = getCurrentUser(session).getId();
-		Page<BaodanVo> lists = baodanService.getListByUserId(userId,page,rows);
-		
+		//Page<BaodanVo> lists = baodanService.getListByUserId(userId,p.getPage(),p.getRows());
+		Page<BaodanVo> lists = baodanService.getListByUserId(userId,user.getRole(),p);
 		return DataGridView.fromSpringPage(lists);
 	}
 	

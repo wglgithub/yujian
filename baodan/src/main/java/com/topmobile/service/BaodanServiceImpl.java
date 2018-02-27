@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.topmobile.bean.BaodanSearchParam;
 import com.topmobile.bean.BaodanVo;
 import com.topmobile.bean.RequestBaodan;
 import com.topmobile.dao.BaodanDao;
@@ -77,6 +78,11 @@ public class BaodanServiceImpl implements BaodanService {
 			return 1;
 		}
 		return 0;
+	}
+	@Override
+	public Page<BaodanVo> getListByUserId(String userId,String role,BaodanSearchParam p) {
+		
+		return getBaodanDao().findMyList(userId,role, p);
 	}
 
 }
