@@ -113,6 +113,7 @@
     	<!-- 报单系统登录API拦截器 -->
     	<mvc:interceptor>
     		<mvc:mapping path="/api/baodan/**"/>
+    		<mvc:mapping path="/baodan/admin/api/**" />
     		<mvc:mapping path="/baodan/comn/api/**"/>
     		<mvc:exclude-mapping path="/v/baodan/sign"/>
     		<bean class="com.topmobile.interceptors.BaodanApiInterceptor"></bean>
