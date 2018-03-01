@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Strings;
 import com.topmobile.bean.BaodanSearchParam;
 import com.topmobile.bean.BaodanVo;
 import com.topmobile.bean.RequestBaodan;
@@ -31,9 +32,17 @@ public class BaodanServiceImpl implements BaodanService {
 		BaoDan insertBean = null; //带插入数据
 		String proxyId = null ; //代理id
 		try {
+			if( !Strings.isNullOrEmpty(bean.getId())){
+				BaoDan existBean  = baodanDao.findOne(bean.getId());
+				if(existBean==null||SureState.SURE.equals(existBean.getSureState())){
+					//编辑失败
+					return 0;
+				}
+				existBean = null;
+			}
 			insertBean = BaoDan.fromRequestBaodan(userId,bean);
 			//查询订单编号是否已经存在
-			if(baodanDao.existsByOrderNo(bean.getOrderId())>0){
+			if(Strings.isNullOrEmpty(bean.getId()) && baodanDao.existsByOrderNo(bean.getOrderId())>0){
 				return -1 ;
 			}
 			//查询上报人的代理

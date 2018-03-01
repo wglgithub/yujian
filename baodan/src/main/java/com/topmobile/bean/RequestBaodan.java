@@ -4,6 +4,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class RequestBaodan {
+	private String id ;
 	//商城id
 	@NotNull(message="请选择商城")
 	private String mall;
@@ -108,6 +109,12 @@ public class RequestBaodan {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
+	public String getId() {
+		return id;
+	}
 	
+	public void setId(String id) {
+		this.id = id;
+	}
 	
 }
