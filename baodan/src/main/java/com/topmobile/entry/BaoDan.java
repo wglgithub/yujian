@@ -66,12 +66,12 @@ public class BaoDan extends BaseEntry {
 	@Column
 	private String logisticsNo;
 	//订单物流状态 （未发货、已发货、已签收）
-	@Column
+	@Column(columnDefinition="enum('未发货','已发货','已签收') DEFAULT '未发货' COMMENT '订单物流状态' ")
 	private String fahuoState ="未发货";
 	//确认状态
-	@Column
+	@Column(columnDefinition="enum('已确认','未确认') DEFAULT '未确认' COMMENT '确认状态' ")
 	private String sureState="未确认" ;
-	@Column(columnDefinition="varchar(255) DEFAULT '未确认' COMMENT '当前处理状态' ")
+	@Column(columnDefinition="enum('已回款','已签收','已发货','未确认') DEFAULT '未确认' COMMENT '当前处理状态'")
 	private String currentState = "未确认";
 	//管理员出手单价 单位分
 	@Column
@@ -89,10 +89,10 @@ public class BaoDan extends BaseEntry {
 	@Column
 	private Timestamp payTime2 ;
 	//代理收到汇款的状态  未回款、已回款
-	@Column
+	@Column(columnDefinition="enum('已回款','未回款') DEFAULT '未回款'")
 	private String paymentState1="未回款";
 	//抢手收到回款的状态  未回款、已回款
-	@Column
+	@Column(columnDefinition="enum('已回款','未回款') DEFAULT '未回款'")
 	private String paymentState2="未回款";
 	//管理员收益 单位分
 	@Column
@@ -398,6 +398,7 @@ public class BaoDan extends BaseEntry {
 
 	public static BaoDan fromRequestBaodan(String userId,RequestBaodan bean) {
 		BaoDan d = new BaoDan();
+		d.setId(bean.getId());
 		d.setSubmitUser(userId);
 		d.setMall(bean.getMall());
 		d.setMobileModel(bean.getModel());
