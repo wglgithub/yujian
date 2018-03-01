@@ -29,4 +29,9 @@ public class Constants {
 		String SEND = "已发货";
 		String SIGN = "已签收";
 	}
+	
+	public static interface SureState{
+		String WAIT = "未确认";
+		String SURE = "已确认";
+	}
 }

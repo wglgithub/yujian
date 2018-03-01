@@ -20,6 +20,7 @@ import com.topmobile.bean.RequestParamModel;
 import com.topmobile.entry.BaoDanMall;
 import com.topmobile.entry.MobileModel;
 import com.topmobile.service.BaodanMallService;
+import com.topmobile.service.BaodanService;
 import com.topmobile.service.MobileModelService;
 import com.topmobile.util.ApiResponseCode;
 import com.topmobile.util.Strings;
@@ -32,6 +33,8 @@ public class BaoDanAdminCon extends BaodanBaseCon {
 	BaodanMallService mallService ;
 	@Autowired
 	MobileModelService modelService ;
+	@Autowired
+	BaodanService baodanService ;
 	
 	@RequestMapping("mall/add")
 	@ResponseBody
@@ -130,6 +133,19 @@ public class BaoDanAdminCon extends BaodanBaseCon {
 			return new JsonViewObject(ApiResponseCode.ERROR_ARGS_ILLEGAL, "至少选择一个商城");
 		}
 		int res = modelService.updateModel(Arrays.asList(malls),model);
+		if(res>0){
+			return new JsonViewObject(ApiResponseCode.SUCCESS_OK, "OK");
+		}
+		return new JsonViewObject(ApiResponseCode.ERROR_FAILED, "操作失败");
+	}
+	
+	@RequestMapping("zige/sure")
+	@ResponseBody
+	public JsonViewObject modelUpdate(String id){
+		if(Strings.isEmpty(id)){
+			return new JsonViewObject(ApiResponseCode.ERROR_ARGS_ILLEGAL, "参数错误");
+		}
+		int res = baodanService.updateSureState(id);
 		if(res>0){
 			return new JsonViewObject(ApiResponseCode.SUCCESS_OK, "OK");
 		}

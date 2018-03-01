@@ -105,13 +105,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div class="required-select" disabled="true" data-options="name:'del',iconCls:'icon-remove'">删除</div>
 		</div>
 		<div id="mm-selected" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
+			<c:if test="${param.role eq 'admin' }">
+			<div data-options="name:'sure',iconCls:'icon-ok'">确认</div>
+			</c:if>
 			<div data-options="name:'new',iconCls:'icon-add'">上报资格</div>
 			<div data-options="name:'wuliu',iconCls:'icon-edit'">填写物流</div>
 			<div class="required-select" disabled="true" data-options="name:'edit',iconCls:'icon-edit'">编辑</div>
 			<div class="menu-sep required-select"></div>
 			<div class="required-select" disabled="true" data-options="name:'del',iconCls:'icon-remove'">删除</div>
 		</div>
-		<div id="editwuliudlg"  title="填写物流单号" data-options="iconCls:'icon-add'" style="width:350px;height:180px;padding:10px;display:none;position: relative;">
+		<div id="editwuliudlg"  title="填写物流单号" data-options="iconCls:'icon-add',buttons:'#editwuliudlg_buttons'" style="width:350px;height:180px;padding:10px;display:none;position: relative;">
 			<form id="ff_wuliu" action="baodan/comn/api/order/fahuo" method="post">
 				<input name="id" type="hidden" >
 				<table>
@@ -120,7 +123,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						<td><input class="easyui-textbox easyui-validatebox" required="true" data-options="prompt:'请输入物流单号'" missingMessage="物流单号不能空" style="width:150px;height:26px" name="no" ></td>
 					</tr>
 				</table>
-				<div style="text-align: center;">
+				<div id="editwuliudlg_buttons" style="text-align: center;">
 					<a href="javascript:onWuliuFormSubmit(this);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" >保存</a>
 				</div>
 			</form>
@@ -141,10 +144,19 @@ function reloadData(){
 //右键菜单
 $("#p").bind('contextmenu',function(e){
 	e.preventDefault();
-	if(!getSelected()){
+	var select_data = getSelected();
+	console.log('contextmenu',select_data);
+	if(!select_data){
 		$('#mm').menu('show', {left: e.pageX,top: e.pageY});
 	}else{
 		$('#mm-selected').menu('show', {left: e.pageX,top: e.pageY});
+		var item = $('#mm-selected').menu('findItem', '确认');
+		if(select_data.applystate!='未确认'){
+			//禁用确认按钮
+			$('#mm-selected').menu('disableItem', item.target);
+		}else{
+			$('#mm-selected').menu('enableItem', item.target);
+		}
 	}
 	
 });
@@ -158,18 +170,29 @@ function doSearch(){
 }
 //右键菜单点击
 function menuHandler(item){
+	var bindData = getSelected();
 	if(item.name=='new'){
 		window.location.href=$('#上报资格 a').get(0).href;
 	}else if(item.name=='wuliu'){
-		var itemid = getSelected().id;
-		openWuliuEditDialog(itemid);
+		openWuliuEditDialog(bindData.id);
 	}
 	else if(item.name=='edit'){
-		var itemid = getSelected().id;
-		openEditDialog(itemid);
+		openEditDialog(bindData.id);
 	}else if(item.name=='del'){
-		var itemid = getSelected().id;
-		sendDeleteAction(itemid);
+		sendDeleteAction(bindData.id);
+	}else if(item.name=='sure'){
+		$.messager.confirm('确认资格', '确认资格信息吗?', function(r){
+			if (r){
+				$.ajax({
+					url:'baodan/admin/api/zige/sure',
+					data:{id:bindData.id},
+					success:function(rep){
+						console.log(rep);
+						reloadData();
+					}
+				});
+			}
+		});
 	}
 }
 

@@ -11,6 +11,7 @@ import com.topmobile.bean.RequestBaodan;
 import com.topmobile.dao.BaodanDao;
 import com.topmobile.dao.BaodanUserDao;
 import com.topmobile.entry.BaoDan;
+import com.topmobile.util.Constants.SureState;
 import com.topmobile.util.Constants.WuliuState;
 
 @Service
@@ -83,6 +84,16 @@ public class BaodanServiceImpl implements BaodanService {
 	public Page<BaodanVo> getListByUserId(String userId,String role,BaodanSearchParam p) {
 		
 		return getBaodanDao().findMyList(userId,role, p);
+	}
+	@Override
+	public int updateSureState(String id) {
+		BaoDan it = baodanDao.findOne(id);
+		if(it!=null){
+			it.setSureState(SureState.SURE);
+			baodanDao.save(it);
+			return 1;
+		}
+		return 0;
 	}
 
 }

@@ -25,4 +25,6 @@ public interface BaodanService {
 	public int updateWuliuField(String id, String no);
 
 	public Page<BaodanVo> getListByUserId(String userId, String role, BaodanSearchParam p);
+
+	public int updateSureState(String id);
 }
