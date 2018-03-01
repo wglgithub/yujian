@@ -22,7 +22,8 @@ public class Constants {
 		String NOT_SURE = "未确认";
 		String SEND = "已发货";
 		String SIGN = "已签收";
-		String HUIKUAN = "已回款";
+		String HUIKUAN_ADMIN = "群主回款";
+		String HUIKUAN_AGENT = "代理回款";
 	}
 	public static interface WuliuState{
 		String WAIT = "未发货";

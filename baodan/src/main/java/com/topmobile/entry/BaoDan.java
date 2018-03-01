@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.google.common.base.Strings;
 import com.topmobile.bean.RequestBaodan;
 
 /**
@@ -71,7 +72,7 @@ public class BaoDan extends BaseEntry {
 	//确认状态
 	@Column(columnDefinition="enum('已确认','未确认') DEFAULT '未确认' COMMENT '确认状态' ")
 	private String sureState="未确认" ;
-	@Column(columnDefinition="enum('已回款','已签收','已发货','未确认') DEFAULT '未确认' COMMENT '当前处理状态'")
+	@Column(columnDefinition="enum('代理回款','群主回款','已签收','已发货','未确认') DEFAULT '未确认' COMMENT '当前处理状态'")
 	private String currentState = "未确认";
 	//管理员出手单价 单位分
 	@Column
@@ -398,7 +399,9 @@ public class BaoDan extends BaseEntry {
 
 	public static BaoDan fromRequestBaodan(String userId,RequestBaodan bean) {
 		BaoDan d = new BaoDan();
-		d.setId(bean.getId());
+		if(!Strings.isNullOrEmpty(bean.getId())){
+			d.setId(bean.getId());
+		}
 		d.setSubmitUser(userId);
 		d.setMall(bean.getMall());
 		d.setMobileModel(bean.getModel());
