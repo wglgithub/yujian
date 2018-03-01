@@ -95,5 +95,10 @@ public class BaodanServiceImpl implements BaodanService {
 		}
 		return 0;
 	}
+	@Override
+	public int deleteOne(String id) {
+		
+		return baodanDao.upateFlagById(1,id);
+	}
 
 }

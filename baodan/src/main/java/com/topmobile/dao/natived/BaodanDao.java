@@ -124,7 +124,7 @@ public class BaodanDao extends NativeBaseDao{
 				sqlBuilder.append("LEFT JOIN (SELECT t.c_id id,CONCAT(t.name,' ',t.ram,'+',t.rom) as model,t.color from w_mobilemodel t ) mm on mm.id = b.mobileModel ");
 			}
 		}
-		sqlBuilder.append(" WHERE 1=1 ");
+		sqlBuilder.append(" WHERE b.flag=0 ");
 		if(Role.QIANG_SHOU.equals(role)){
 			sqlBuilder.append("and b.submitUser = :userId ");
 		}else if(Role.DAI_LI.equals(role)){

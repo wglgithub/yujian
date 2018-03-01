@@ -8,7 +8,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- 	<div id="tb" style="padding:5px;background:#fafafa;width:500px;border:1px solid #ccc"> -->
 <!-- 	<a id="addmallbtn" href="javascript:;" class="easyui-linkbutton" iconCls="icon-add">添加</a> -->
 <!-- 	</div> -->
-	<div id="addmalldlg"  title="添加机型" data-options="iconCls:'icon-add'" style="width:480px;height:320px;padding:10px;display:none;">
+	<div id="addmalldlg"  title="添加机型" data-options="iconCls:'icon-add',buttons:'#addmalldlg-buttons'" style="width:480px;height:320px;padding:10px;display:none;">
 		<form id="ff" action="baodan/admin/api/model/add" method="post">
 		<table>
 			<tr>
@@ -62,10 +62,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</tr>
 			<tr>
 				<td></td>
-				<td><a href="javascript:onFormSubmit(this);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="margin-left: 120px;margin-right: 120px;">添加</a></td>
+				<td></td>
 			</tr>
 		</table>
 	</form>
+	<div id="addmalldlg-buttons" style="text-align: center;">
+		<a href="javascript:onFormSubmit(this);" class="easyui-linkbutton" data-options="iconCls:'icon-add'" style="margin-left: 120px;margin-right: 120px;">添加</a>
+	</div>
 	</div>
 	<div id="editmalldlg"  title="编辑机型" data-options="iconCls:'icon-add'" style="width:480px;height:320px;padding:10px;display:none;">
 		<form id="ff_edit" action="baodan/admin/api/model/update" method="post">
@@ -246,12 +249,19 @@ $(function(){
 			if(rep.status==200){
 				closeAddDialog();
 				reloadmalls();
+				clearAddForm();
 			}else{
 				$.messager.alert('error', rep.msg, 'error');
 			}
 			
 		}
 	});
+	
+	function clearAddForm(){
+		$(".myEval-impress ol li").removeClass('selected')
+		.find('input[name=malls]').remove();
+		$('#ff').form('clear');
+	}
 	$('#ff_edit').form({
 		success:function(data){
 			var rep = eval('('+data+')');

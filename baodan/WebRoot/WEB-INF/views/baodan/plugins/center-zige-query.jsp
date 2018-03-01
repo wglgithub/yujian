@@ -100,9 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<div id="mm" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
 			<div data-options="name:'new',iconCls:'icon-add'">上报资格</div>
 			<div data-options="name:'wuliu',iconCls:'icon-edit'" disabled="true" >填写物流</div>
-			<div class="required-select" disabled="true" data-options="name:'edit',iconCls:'icon-edit'">编辑</div>
-			<div class="menu-sep required-select"></div>
-			<div class="required-select" disabled="true" data-options="name:'del',iconCls:'icon-remove'">删除</div>
+			
 		</div>
 		<div id="mm-selected" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
 			<c:if test="${param.role eq 'admin' }">
@@ -112,7 +110,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<div data-options="name:'wuliu',iconCls:'icon-edit'">填写物流</div>
 			<div class="required-select" disabled="true" data-options="name:'edit',iconCls:'icon-edit'">编辑</div>
 			<div class="menu-sep required-select"></div>
-			<div class="required-select" disabled="true" data-options="name:'del',iconCls:'icon-remove'">删除</div>
+			<c:if test="${param.role eq 'admin' }">
+			<div class="required-select" data-options="name:'del',iconCls:'icon-remove'">删除</div>
+			</c:if>
 		</div>
 		<div id="editwuliudlg"  title="填写物流单号" data-options="iconCls:'icon-add',buttons:'#editwuliudlg_buttons'" style="width:350px;height:180px;padding:10px;display:none;position: relative;">
 			<form id="ff_wuliu" action="baodan/comn/api/order/fahuo" method="post">
@@ -195,7 +195,20 @@ function menuHandler(item){
 		});
 	}
 }
-
+function sendDeleteAction(dataid){
+	$.messager.confirm('删除资格', '确认删除资格记录吗?', function(r){
+		if (r){
+			$.ajax({
+				url:'baodan/admin/api/zige/rm',
+				data:{id:dataid},
+				success:function(rep){
+					console.log(rep);
+					reloadData();
+				}
+			});
+		}
+	});
+}
 function openWuliuEditDialog(dataId){
 	$('#editwuliudlg').dialog({
 		iconCls:'icon-edit',

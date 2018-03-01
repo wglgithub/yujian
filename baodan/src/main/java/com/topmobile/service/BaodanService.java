@@ -27,4 +27,6 @@ public interface BaodanService {
 	public Page<BaodanVo> getListByUserId(String userId, String role, BaodanSearchParam p);
 
 	public int updateSureState(String id);
+
+	public int deleteOne(String id);
 }

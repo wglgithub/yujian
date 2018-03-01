@@ -141,11 +141,24 @@ public class BaoDanAdminCon extends BaodanBaseCon {
 	
 	@RequestMapping("zige/sure")
 	@ResponseBody
-	public JsonViewObject modelUpdate(String id){
+	public JsonViewObject zigeSure(String id){
 		if(Strings.isEmpty(id)){
 			return new JsonViewObject(ApiResponseCode.ERROR_ARGS_ILLEGAL, "参数错误");
 		}
 		int res = baodanService.updateSureState(id);
+		if(res>0){
+			return new JsonViewObject(ApiResponseCode.SUCCESS_OK, "OK");
+		}
+		return new JsonViewObject(ApiResponseCode.ERROR_FAILED, "操作失败");
+	}
+	
+	@RequestMapping("zige/rm")
+	@ResponseBody
+	public JsonViewObject zigeRemove(String id){
+		if(Strings.isEmpty(id)){
+			return new JsonViewObject(ApiResponseCode.ERROR_ARGS_ILLEGAL, "参数错误");
+		}
+		int res = baodanService.deleteOne(id);
 		if(res>0){
 			return new JsonViewObject(ApiResponseCode.SUCCESS_OK, "OK");
 		}
