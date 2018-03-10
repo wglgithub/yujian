@@ -2,6 +2,7 @@ package com.topmobile.service;
 
 import org.springframework.data.domain.Page;
 
+import com.topmobile.bean.AdminReturnedParamVo;
 import com.topmobile.bean.BaodanSearchParam;
 import com.topmobile.bean.BaodanVo;
 import com.topmobile.bean.RequestBaodan;
@@ -29,4 +30,16 @@ public interface BaodanService {
 	public int updateSureState(String id);
 
 	public int deleteOne(String id);
+	/**
+	 * 签收
+	 * @param id
+	 * @return
+	 */
+	public int updateSignForState(String id);
+	/**
+	 * 管理员给代理回款
+	 * @param param
+	 * @return
+	 */
+	public int updateAdminRetured(AdminReturnedParamVo param);
 }

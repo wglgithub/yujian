@@ -1,19 +1,20 @@
 package com.topmobile.web;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.topmobile.bean.AdminReturnedParamVo;
 import com.topmobile.bean.DataGridView;
 import com.topmobile.bean.JsonViewObject;
 import com.topmobile.bean.RequestParamModel;
@@ -152,6 +153,19 @@ public class BaoDanAdminCon extends BaodanBaseCon {
 		return new JsonViewObject(ApiResponseCode.ERROR_FAILED, "操作失败");
 	}
 	
+	@RequestMapping("zige/sign")
+	@ResponseBody
+	public JsonViewObject zigeSignfor(String id){
+		if(Strings.isEmpty(id)){
+			return new JsonViewObject(ApiResponseCode.ERROR_ARGS_ILLEGAL, "参数错误");
+		}
+		int res = baodanService.updateSignForState(id);
+		if(res>0){
+			return new JsonViewObject(ApiResponseCode.SUCCESS_OK, "OK");
+		}
+		return new JsonViewObject(ApiResponseCode.ERROR_FAILED, "操作失败");
+	}
+	
 	@RequestMapping("zige/rm")
 	@ResponseBody
 	public JsonViewObject zigeRemove(String id){
@@ -159,6 +173,20 @@ public class BaoDanAdminCon extends BaodanBaseCon {
 			return new JsonViewObject(ApiResponseCode.ERROR_ARGS_ILLEGAL, "参数错误");
 		}
 		int res = baodanService.deleteOne(id);
+		if(res>0){
+			return new JsonViewObject(ApiResponseCode.SUCCESS_OK, "OK");
+		}
+		return new JsonViewObject(ApiResponseCode.ERROR_FAILED, "操作失败");
+	}
+	
+	@RequestMapping("zige/return")
+	@ResponseBody
+	public JsonViewObject zigeReturned(@Valid AdminReturnedParamVo param,BindingResult bindingResult){
+		
+		if(bindingResult.hasErrors()){
+			return new JsonViewObject(ApiResponseCode.ERROR_ARGS_ILLEGAL,"参数错误" ,bindingResult.getAllErrors());
+		}
+		int res = baodanService.updateAdminRetured(param);
 		if(res>0){
 			return new JsonViewObject(ApiResponseCode.SUCCESS_OK, "OK");
 		}

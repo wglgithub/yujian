@@ -24,6 +24,14 @@ public class BaodanVo {
 	private String state1 ;
 	//审核状态
 	private String applystate ;
+	
+	private String fahuoState ;
+	
+	private String currentState ;
+	
+	private String paymentState1 ;
+	
+	private String paymentState2 ;
 	//回款金额
 	private String returnPay ;
 	//物流单号
@@ -122,4 +130,33 @@ public class BaodanVo {
 		this.id = id;
 	}
 	
+	public String getFahuoState() {
+		return fahuoState;
+	}
+	public void setFahuoState(String fahuoState) {
+		this.fahuoState = fahuoState;
+	}
+	
+	public String getCurrentState() {
+		return currentState;
+	}
+	
+	public void setCurrentState(String currentState) {
+		this.currentState = currentState;
+	}
+	
+	public String getPaymentState1() {
+		return paymentState1;
+	}
+	public void setPaymentState1(String paymentState1) {
+		this.paymentState1 = paymentState1;
+	}
+	
+	public String getPaymentState2() {
+		return paymentState2;
+	}
+	
+	public void setPaymentState2(String paymentState2) {
+		this.paymentState2 = paymentState2;
+	}
 }

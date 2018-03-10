@@ -72,7 +72,7 @@ public class BaoDan extends BaseEntry {
 	//确认状态
 	@Column(columnDefinition="enum('已确认','未确认') DEFAULT '未确认' COMMENT '确认状态' ")
 	private String sureState="未确认" ;
-	@Column(columnDefinition="enum('代理回款','群主回款','已签收','已发货','未确认') DEFAULT '未确认' COMMENT '当前处理状态'")
+	@Column(columnDefinition="enum('代理回款','群主回款','已签收','已发货','已确认','未确认') DEFAULT '未确认' COMMENT '当前处理状态'")
 	private String currentState = "未确认";
 	//管理员出手单价 单位分
 	@Column
@@ -95,7 +95,6 @@ public class BaoDan extends BaseEntry {
 	//抢手收到回款的状态  未回款、已回款
 	@Column(columnDefinition="enum('已回款','未回款') DEFAULT '未回款'")
 	private String paymentState2="未回款";
-	//管理员收益 单位分
 	@Column
 	private Long income1 ;
 	//代理收益 单位分
@@ -160,7 +159,7 @@ public class BaoDan extends BaseEntry {
 	}
 
 
-	public double getOrderPay() {
+	public long getOrderPay() {
 		return orderPay;
 	}
 
@@ -395,6 +394,7 @@ public class BaoDan extends BaseEntry {
 	public String getCurrentState() {
 		return currentState;
 	}
+	
 
 
 	public static BaoDan fromRequestBaodan(String userId,RequestBaodan bean) {

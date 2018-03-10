@@ -6,12 +6,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.google.common.base.Strings;
+import com.topmobile.bean.AdminReturnedParamVo;
 import com.topmobile.bean.BaodanSearchParam;
 import com.topmobile.bean.BaodanVo;
 import com.topmobile.bean.RequestBaodan;
 import com.topmobile.dao.BaodanDao;
 import com.topmobile.dao.BaodanUserDao;
 import com.topmobile.entry.BaoDan;
+import com.topmobile.util.Constants.CurrentState;
+import com.topmobile.util.Constants.PaymentState;
 import com.topmobile.util.Constants.SureState;
 import com.topmobile.util.Constants.WuliuState;
 
@@ -83,6 +86,9 @@ public class BaodanServiceImpl implements BaodanService {
 			it.setLogisticsNo(no);
 			if(it.getFahuoState()==null||WuliuState.WAIT.equals(it.getFahuoState())){
 				it.setFahuoState(WuliuState.SEND);
+				if(CurrentState.NOT_SURE.equals(it.getCurrentState()) || CurrentState.SURE.equals(it.getCurrentState())  ){
+					it.setCurrentState(CurrentState.SEND);
+				}
 			}
 			baodanDao.save(it);
 			return 1;
@@ -99,6 +105,9 @@ public class BaodanServiceImpl implements BaodanService {
 		BaoDan it = baodanDao.findOne(id);
 		if(it!=null){
 			it.setSureState(SureState.SURE);
+			if(CurrentState.NOT_SURE.equals(it.getCurrentState())){
+				it.setCurrentState(CurrentState.SURE);
+			}
 			baodanDao.save(it);
 			return 1;
 		}
@@ -108,6 +117,56 @@ public class BaodanServiceImpl implements BaodanService {
 	public int deleteOne(String id) {
 		
 		return baodanDao.upateFlagById(1,id);
+	}
+	@Override
+	public int updateSignForState(String id) {
+		BaoDan it = baodanDao.findOne(id);
+		if(it!=null){
+			it.setFahuoState(WuliuState.SIGN);
+			if(it.getCurrentState()==null || it.getCurrentState().equals(CurrentState.NOT_SURE)||it.getCurrentState().equals(CurrentState.SEND)){
+				it.setCurrentState(CurrentState.SIGN);
+			}
+			
+			baodanDao.save(it);
+			return 1;
+		}
+		return 0;
+	}
+	@Override
+	public int updateAdminRetured(AdminReturnedParamVo param) {
+		int resultCodeOK = 1,
+				resultCodeNotExist = -1,
+				resultCodeFailed = 0;
+		String baodanId = param.getId();
+		int amount = 1;
+		int orderMoney = 0 ;
+		BaoDan it = null;
+		/*
+		 * 查询报单中的数量，下单金额，计算收益
+		 */
+		it = baodanDao.findOne(baodanId);
+		if(it==null){
+			return resultCodeNotExist;
+		}
+		amount = it.getAmount();
+		
+		orderMoney = (int) it.getOrderPay();
+		
+		it.setIncome1((long) (param.getShippingPrice()*amount - orderMoney - param.getReturned()));
+		it.setPayment1((long)param.getReturned());
+		it.setIncome2(it.getPayment1()-(it.getIncome3()==null? 0:it.getIncome3()));
+		it.setCurrentState(CurrentState.HUIKUAN_ADMIN);
+		it.setPaymentState1(PaymentState.RETURNED);
+		/*
+		 * 持久化收益
+		 */
+		try {
+			baodanDao.save(it);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return resultCodeFailed ;
+		}
+		return resultCodeOK;
 	}
 
 }
